@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #0f172a;
+  color: white;
+}
+
+.main-content {
+  min-height: 100vh;
+  background-color: #0f172a;
+  color: white;
+}
+
+.project-title {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 30px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  background-color: #1e293b;
+  color: white;
+
+  padding: 12px 16px;
+  border-radius: 10px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+
+  font-size: 14px;
+
+  animation: slideIn 0.3s ease;
+  z-index: 9999;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
