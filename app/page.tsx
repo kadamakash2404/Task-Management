@@ -87,6 +87,16 @@ export default function Home() {
 
   const COLORS = ["#22c55e", "#eab308"];
 
+  const deleteAllPending = () => {
+    setTasks((prev) => prev.filter((task) => task.completed));
+    showToast("All pending tasks deleted");
+  };
+
+  const deleteAllCompleted = () => {
+    setTasks((prev) => prev.filter((task) => !task.completed));
+    showToast("All completed tasks deleted");
+  };
+
   return (
     <div>
       <h1 className="project-title"> Welcome to task magenement </h1>
@@ -114,9 +124,16 @@ export default function Home() {
       <div className="flex justify-center gap-10 mt-10">
         {/* Pending Tasks */}
         <div className="w-96 bg-slate-900 p-4 rounded-2xl shadow-xl">
-          <h2 className="text-xl font-bold mb-4 text-yellow-400">
-            Pending Tasks
-          </h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-yellow-400">Pending Tasks</h2>
+
+            <button
+              onClick={deleteAllPending}
+              className="text-sm px-3 py-1 bg-red-600 hover:bg-red-700 rounded-lg"
+            >
+              Delete All
+            </button>
+          </div>
 
           {tasks.map(
             (task, index) =>
@@ -200,10 +217,37 @@ export default function Home() {
         </div>
 
         {/* Completed Tasks */}
-        <div className="w-96 bg-slate-900 p-4 rounded-2xl shadow-xl">
-          <h2 className="text-xl font-bold mb-4 text-green-400">
-            Completed Tasks
-          </h2>
+        <div
+          className="w-96 bg-slate-900 p-4 rounded-2xl shadow-xl"
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
+          onDrop={() => {
+            document.body.style.cursor = "default";
+
+            if (dragIndex === null) return;
+
+            setTasks((prev) =>
+              prev.map((task, i) =>
+                i === dragIndex ? { ...task, completed: true } : task,
+              ),
+            );
+
+            setDragIndex(null);
+          }}
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-green-400">
+              Completed Tasks
+            </h2>
+
+            <button
+              onClick={deleteAllCompleted}
+              className="text-sm px-3 py-1 bg-red-600 hover:bg-red-700 rounded-lg"
+            >
+              Delete All
+            </button>
+          </div>
 
           {tasks.map(
             (task, index) =>
